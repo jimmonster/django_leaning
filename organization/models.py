@@ -16,14 +16,14 @@ class CityDict(models.Model):
         verbose_name_plural = verbose_name
 
 
-class CourseOrg(models, models):
+class CourseOrg(models.Model):
     name = models.CharField(max_length=50, verbose_name='机构名称')
     desc = models.TextField(verbose_name='机构描述')
     click_nums = models.IntegerField(default=0, verbose_name='点击数')
     fav_nums = models.IntegerField(default=0, verbose_name='收藏数')
-    image = models.ImageField(upload_to='/%Y/%m', max_length=100, verbose_name='封面图')
+    image = models.ImageField(upload_to='org/%Y/%m', max_length=100, verbose_name='封面图')
     address = models.CharField(max_length=150, verbose_name='机构地址')
-    city = models.ForeignKey(CityDict, verbose_name='所在城市')
+    city = models.ForeignKey(CityDict,on_delete=models.CASCADE, verbose_name='所在城市')
     add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')
 
     class Meta:
@@ -32,7 +32,7 @@ class CourseOrg(models, models):
 
 
 class Teacher(models.Model):
-    org=models.ForeignKey(CourseOrg,verbose_name='课程机构')
+    org=models.ForeignKey(CourseOrg,on_delete=models.CASCADE,verbose_name='课程机构')
     name = models.CharField(max_length=50, verbose_name='授课教师')
     work_years = models.IntegerField(default=0, verbose_name='工作年限')
     work_company = models.CharField(max_length=50, verbose_name='就职公司')
