@@ -13,7 +13,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from future.moves import sys
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
+sys.path.insert(0,os.path.join(BASE_DIR,'extra_apps'))
+
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -41,6 +47,16 @@ INSTALLED_APPS = [
     'courses',
     'organization',
     'operation',
+    # xadmin pyhton3需要的导入的包
+    'xadmin',
+    'crispy_forms',
+    'formtools',
+    'httplib2',
+    'import_export',
+    # xadmin pyhton3需要的导入的包
+
+
+
 
 
 ]
@@ -58,6 +74,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'MxOnline.urls'
+
 
 TEMPLATES = [
     {
@@ -132,3 +149,5 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
