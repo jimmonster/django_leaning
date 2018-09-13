@@ -35,6 +35,10 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+# 定义个元祖，登录的时候可以用除用户名以外的登录
+AUTHENTICATION_BACKENDS=(
+    'users.views.CustomBackend',
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -149,5 +153,10 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+# 引入静态文件指定位置
+STATICFILES_DIRS=[
+    os.path.join(BASE_DIR,'static')
+
+]
 
 
