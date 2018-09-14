@@ -3,10 +3,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.views.generic.base import View
-
+from  django.contrib.auth.hashers import make_password
 
 from .models import UserProfile
-from .forms import LoginForm
+from .forms import LoginForm,RegisterForm
+from utils.email_send import send_register_eamil
 
 
 # Create your views here.
@@ -20,6 +21,34 @@ class CustomBackend(ModelBackend):
                 return user
         except Exception as e:
             return None
+
+
+# 注册
+
+class RegisterView(View):
+    def get(self, request):
+        register_form=RegisterForm()
+        return render(request, 'register.html', {'register_form':register_form})
+    def post(self,request):
+        register_form=RegisterForm(request.POST)
+        if register_form.is_valid():
+            user_name = request.POST.get('email', '')
+            pass_word = request.POST.get('password', '')
+            # 邮箱验证码
+            user_profile=UserProfile()
+            user_profile.username=user_name
+            user_profile.email=user_name
+            user_profile.is_active=False
+            user_profile.password=make_password(pass_word)
+            # 保存到数据库
+            user_profile.save()
+            # 发送邮件到邮箱
+            send_register_eamil(user_name,'register')
+            return render(request, 'login.html')
+        else:
+            return render(request, 'register.html',{'register_form':register_form})
+
+
 
 
 # 基于类来定义登录逻辑
@@ -37,13 +66,13 @@ class LoginView(View):
 
             user = authenticate(username=user_name, password=pass_word)
             if user is not None:
+                # django 登录api，
                 login(request, user)
                 return render(request, 'index.html')
             else:
                 return render(request, 'login.html', {'msg': '用户名或者密码错误！'})
         else:
-            return render(request, 'login.html', {'login_form':login_form})
-
+            return render(request, 'login.html', {'login_form': login_form})
 
 
 def user_login(request):

@@ -29,7 +29,7 @@ class UserProfile(AbstractUser):
 
 # 邮箱验证码
 class EmailVerifyRecord(models.Model):
-    code = models.CharField(max_length=10, verbose_name='邮箱验证码')
+    code = models.CharField(max_length=20, verbose_name='邮箱验证码')
     email = models.EmailField(max_length=50, verbose_name='邮箱')
     send_type = models.CharField(choices=(('register', '注册'), ('forget', '找回密码')), max_length=10,
                                  verbose_name='发送类型')

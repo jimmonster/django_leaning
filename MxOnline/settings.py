@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'httplib2',
     'import_export',
     # xadmin pyhton3需要的导入的包
+    # 验证码
+    'captcha',
 
 
 
@@ -158,5 +160,14 @@ STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'static')
 
 ]
+
+EMAIL_HOST='smtp.sina.com'
+EMAIL_PORT=25
+EMAIL_HOST_USER='jimmonster@sina.com'
+EMAIL_HOST_PASSWORD='zxl325'
+EMAIL_USE_TLS=False
+EMAIL_FROM='jimmonster@sina.com'
+
+
 
 
