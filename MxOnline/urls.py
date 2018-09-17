@@ -14,10 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include,re_path
 import xadmin
 from  django.views.generic import TemplateView
-from users.views import LoginView,RegisterView
+from users.views import LoginView,RegisterView,ActiveUserView,ForgetPwdView,ResetView,ModifyPwdView
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
@@ -26,6 +26,16 @@ urlpatterns = [
     path('register/',RegisterView.as_view(),name='register'),
     # 绑定二维码
     path('captcha/', include('captcha.urls')),
+
+    # 添加邮件激活的url
+    re_path('active/(?P<active_code>.*)/',ActiveUserView.as_view(),name='user_active'),
+    #找回密码
+    path('forget/', ForgetPwdView.as_view(),name='forget_pwd'),
+
+    re_path('reset/(?P<active_code>.*)/',ResetView.as_view(),name='reset_pwd'),
+
+    path('modify/', ModifyPwdView.as_view(),name='modify_pwd'),
+
 
 
 

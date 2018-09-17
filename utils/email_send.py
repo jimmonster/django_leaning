@@ -46,6 +46,16 @@ def send_register_eamil(email, send_type="register"):
         # 如果发送成功
         if send_status:
             pass
+    elif send_type == "forget":
+        email_title = "注册激活链接"
+        email_body = "请点击下面的链接重置你的账号: http://127.0.0.1:8000/reset/{0}".format(code)
+
+        # 使用Django内置函数完成邮件发送。四个参数：主题，邮件内容，从哪里发，接受者list
+        send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
+        # 如果发送成功
+        if send_status:
+            pass
+
 
 
 
