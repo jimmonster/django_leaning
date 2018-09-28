@@ -1,7 +1,7 @@
 __author__ = 'jim'
 __date__ = '11:15,2018/9/14'
 from random import Random
-from  users.models import EmailVerifyRecord
+from users.models import EmailVerifyRecord
 # 导入Django自带的邮件模块
 from django.core.mail import send_mail
 # 导入setting中发送邮件的配置
@@ -18,6 +18,7 @@ def random_str(random_length=8):
     for i in range(random_length):
         str += chars[random.randint(0, length)]
     return str
+
 
 # 发送注册邮件
 def send_register_eamil(email, send_type="register"):
@@ -55,8 +56,3 @@ def send_register_eamil(email, send_type="register"):
         # 如果发送成功
         if send_status:
             pass
-
-
-
-
-

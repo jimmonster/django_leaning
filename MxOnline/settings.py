@@ -16,11 +16,8 @@ import os
 from future.moves import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
-sys.path.insert(0,os.path.join(BASE_DIR,'extra_apps'))
-
-
-
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -33,10 +30,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 # 定义个元祖，登录的时候可以用除用户名以外的登录
-AUTHENTICATION_BACKENDS=(
+AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
 
@@ -61,13 +57,8 @@ INSTALLED_APPS = [
     # 验证码
     'captcha',
 
-
-
-
-
 ]
-AUTH_USER_MODEL='users.UserProfile'
-
+AUTH_USER_MODEL = 'users.UserProfile'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,7 +72,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'MxOnline.urls'
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -94,6 +84,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #添加图片处理器，为了在课程列表中前面加上MEDIA_URL
+                'django.template.context_processors.media',
 
             ],
         },
@@ -102,7 +94,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MxOnline.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -110,12 +101,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mxonline',
-        'USER':'root',
-        'PASSWORD':'zxl325',
-        'HOST':'182.61.137.228',
+        'USER': 'root',
+        'PASSWORD': 'zxl325',
+        'HOST': '182.61.137.228',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -135,13 +125,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 # 设置时区
-LANGUAGE_CODE = 'zh-hans'#en-us
+LANGUAGE_CODE = 'zh-hans'  # en-us
 
-TIME_ZONE = 'Asia/Shanghai'#UTC
+TIME_ZONE = 'Asia/Shanghai'  # UTC
 
 USE_I18N = True
 
@@ -150,24 +139,23 @@ USE_L10N = True
 # USE_TZ = True
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
 # 引入静态文件指定位置
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
 
 ]
 
-EMAIL_HOST='smtp.sina.com'
-EMAIL_PORT=25
-EMAIL_HOST_USER='jimmonster@sina.com'
-EMAIL_HOST_PASSWORD='zxl325'
-EMAIL_USE_TLS=False
-EMAIL_FROM='jimmonster@sina.com'
+EMAIL_HOST = 'smtp.sina.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'jimmonster@sina.com'
+EMAIL_HOST_PASSWORD = 'zxl325'
+EMAIL_USE_TLS = False
+EMAIL_FROM = 'jimmonster@sina.com'
 
-
-
-
+# 配置上传文件资源的地址
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

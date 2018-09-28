@@ -14,29 +14,35 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include,re_path
+from django.urls import path, include, re_path
 import xadmin
-from  django.views.generic import TemplateView
-from users.views import LoginView,RegisterView,ActiveUserView,ForgetPwdView,ResetView,ModifyPwdView
+from django.views.generic import TemplateView
+from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView
+from organization.views import OrgView
+from django.views.static import serve
+from  MxOnline.settings import MEDIA_ROOT
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
-    path('',TemplateView.as_view(template_name='index.html'),name='index'),
-    path('login/',LoginView.as_view(),name='login'),
-    path('register/',RegisterView.as_view(),name='register'),
+    path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('register/', RegisterView.as_view(), name='register'),
     # 绑定二维码
     path('captcha/', include('captcha.urls')),
 
     # 添加邮件激活的url
-    re_path('active/(?P<active_code>.*)/',ActiveUserView.as_view(),name='user_active'),
-    #找回密码
-    path('forget/', ForgetPwdView.as_view(),name='forget_pwd'),
+    re_path('active/(?P<active_code>.*)/', ActiveUserView.as_view(), name='user_active'),
+    # 找回密码
+    path('forget/', ForgetPwdView.as_view(), name='forget_pwd'),
 
-    re_path('reset/(?P<active_code>.*)/',ResetView.as_view(),name='reset_pwd'),
+    re_path('reset/(?P<active_code>.*)/', ResetView.as_view(), name='reset_pwd'),
 
-    path('modify/', ModifyPwdView.as_view(),name='modify_pwd'),
+    path('modify/', ModifyPwdView.as_view(), name='modify_pwd'),
 
+    #课程机构首页
+    path('org_list/', OrgView.as_view(), name='org_list'),
 
-
+#   处理图片显示的url，使用django自带的serve，传入参数后告诉它去哪个路径去找，
+    re_path(r'^media/(?P<path>.*)',serve,{'document_root':MEDIA_ROOT})
 
 ]
